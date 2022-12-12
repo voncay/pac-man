@@ -37,22 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
   ]
 
+  // debug ->> compter les petits points
   const sumDots = layout.reduce((acc, curr) => {
     if (curr === 0) { 
     acc++
     }
     return acc
   }, 0) 
-
-  const sumPalets = layout.reduce((acc, curr) => {
-    if (curr === 3) { 
-    acc++
-    }
-    return acc
-  }, 0) 
-
   console.log('sumDots is ' + sumDots)
-  console.log('sumPalets is ' + sumPalets)
 
   // 0 - pac-dots  // petites galettes (carrés) qui donnes des points a avaler par pacman
   // 1 - wall  // mur
