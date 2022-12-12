@@ -37,6 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
   ]
 
+  const sumDots = layout.reduce((acc, curr) => {
+    if (curr === 0) { 
+    acc++
+    }
+    return acc
+  }, 0) 
+
+  const sumPalets = layout.reduce((acc, curr) => {
+    if (curr === 3) { 
+    acc++
+    }
+    return acc
+  }, 0) 
+
+  console.log('sumDots is ' + sumDots)
+  console.log('sumPalets is ' + sumPalets)
+
   // 0 - pac-dots  // petites galettes (carrés) qui donnes des points a avaler par pacman
   // 1 - wall  // mur
   // 2 - ghost-lair // la cachette des fantomes
@@ -138,8 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[pacmanCurrentIndex].classList.add('pac-man')
     pacDotEaten()
     powerPelletEaten()
-    // checkForGameOver()
-    // checkForWin()
+    checkForGameOver()
+    checkForWin()
   }
   document.addEventListener('keyup', movePacman)
 
@@ -241,10 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //check for a win - more is when this score is reached
   function checkForWin() {
-    if (score === 274) {
+    if (score === 274) {    // 234 Dots (1 points) + 4 Palets (10 points) = 274
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("You have WON!"); }, 500)
     }
   }
+
 })
