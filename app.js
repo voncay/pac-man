@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const scoreDisplay = document.getElementById('score')
-  const width = 28
+  const width = 28  // largeur du plan du jeu
   let score = 0
-  const grid = document.querySelector('.grid')
-  const layout = [
+  const grid = document.querySelector('.grid')  // grid = grille ou grillage  ->> HTML
+  const squares = []     // square = carré   -->> JS
+
+  const layout = [    // layout = plan de travail
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
@@ -34,16 +36,19 @@ document.addEventListener('DOMContentLoaded', () => {
     1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
   ]
-  // 0 - pac-dots
-  // 1 - wall
-  // 2 - ghost-lair
-  // 3 - power-pellet
-  // 4 - empty
 
-  const squares = []
+  // 0 - pac-dots  // petites galettes (carrés) qui donnes des points a avaler par pacman
+  // 1 - wall  // mur
+  // 2 - ghost-lair // la cachette des fantomes
+  // 3 - power-pellet  // galette qui donne du pouvoir a pacman
+  // 4 - empty // vide
 
-  //create your board
-  function createBoard() {
+  let count = 1   //count == compter
+  let count2 = 2
+
+
+  //create your board --> creation du plan de jeu
+  function createBoard() {  
     for (let i = 0; i < layout.length; i++) {
       const square = document.createElement('div')
       grid.appendChild(square)
@@ -59,6 +64,18 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (layout[i] === 3) {
         squares[i].classList.add('power-pellet')
       }
+
+      //debug
+      if (i % width === 0 ) {
+        squares[i].innerHTML = count
+        count++
+      }
+
+      if ( i > 0 && i < 28 ) {
+        squares[i].innerHTML = count2
+        count2++
+      }
+
     }
   }
   createBoard()
@@ -79,18 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function movePacman(e) {
     squares[pacmanCurrentIndex].classList.remove('pac-man')
     switch(e.keyCode) {
-      case 37:
+      case 37:  // arrowleft --> flèche gauche
         if(
           pacmanCurrentIndex % width !== 0 &&
           !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
           )
         pacmanCurrentIndex -= 1
-        if (squares[pacmanCurrentIndex -1] === squares[363]) {
+        if (squares[pacmanCurrentIndex -1] === squares[363]) {  // cas ou il sort du tunnel
           pacmanCurrentIndex = 391
         }
         break
-      case 38:
+      case 38:  // arrowup --> fleche du haut
         if(
           pacmanCurrentIndex - width >= 0 &&
           !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
@@ -98,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ) 
         pacmanCurrentIndex -= width
         break
-      case 39:
+      case 39:  // arrowright --> fleche de droite
         if(
           pacmanCurrentIndex % width < width - 1 &&
           !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
@@ -109,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pacmanCurrentIndex = 364
         }
         break
-      case 40:
+      case 40:  // arrowdown --> fleche du bas
         if (
           pacmanCurrentIndex + width < width * width &&
           !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
@@ -121,8 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[pacmanCurrentIndex].classList.add('pac-man')
     pacDotEaten()
     powerPelletEaten()
-    checkForGameOver()
-    checkForWin()
+    // checkForGameOver()
+    // checkForWin()
   }
   document.addEventListener('keyup', movePacman)
 
@@ -146,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //make the ghosts stop flashing
-  function unScareGhosts() {
+  function unScareGhosts() {  // fantome appeuré
     ghosts.forEach(ghost => ghost.isScared = false)
   }
 
@@ -176,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[ghost.currentIndex].classList.add('ghost')
     })
 
-  //move the Ghosts randomly
+  //move the Ghosts ly
   ghosts.forEach(ghost => moveGhost(ghost))
 
   function moveGhost(ghost) {
