@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const scoreDisplay = document.getElementById('score')
+  const coordinatesDisplay = document.getElementById('coordinates')
   const width = 28  // largeur du plan du jeu
   let score = 0
   const grid = document.querySelector('.grid')  // grid = grille ou grillage  ->> HTML
@@ -52,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3 - power-pellet  // galette qui donne du pouvoir a pacman
   // 4 - empty // vide
 
-  let count = 1   //count == compter
-  let count2 = 2
+  let count = 0   //count == compter
+  let count2 = 1
 
 
   //create your board --> creation du plan de jeu
@@ -84,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         squares[i].innerHTML = count2
         count2++
       }
-
     }
   }
   createBoard()
@@ -94,12 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
   //draw pacman onto the board
   let pacmanCurrentIndex = 490
   squares[pacmanCurrentIndex].classList.add('pac-man')
-  //get the coordinates of pacman on the grid with X and Y axis
-  // function getCoordinates(index) {
-  //   return [index % width, Math.floor(index / width)]
-  // }
 
-  // console.log(getCoordinates(pacmanCurrentIndex))
+  // debug
+  //get the coordinates of pacman on the grid with X and Y axis
+  function getCoordinates(index) {
+    //return [index % width, Math.floor(index / width)]
+    let coordinates = {
+      x: index % width,
+      y: Math.floor(index / width)
+    }
+    coordinatesDisplay.innerHTML = ` x: ${coordinates.x} y: ${coordinates.y}`
+  }
+  getCoordinates(pacmanCurrentIndex)
 
   //move pacman
   function movePacman(e) {
@@ -144,6 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
         pacmanCurrentIndex += width
         break
     }
+
+    // debug
+    getCoordinates(pacmanCurrentIndex)
+
     squares[pacmanCurrentIndex].classList.add('pac-man')
     pacDotEaten()
     powerPelletEaten()
@@ -256,5 +266,4 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(function(){ alert("You have WON!"); }, 500)
     }
   }
-
 })
