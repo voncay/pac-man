@@ -27,9 +27,29 @@
 }
 
 .pac-man {
-    background-color: yellow;
-    border-radius: 10px;
+    /* background-color: yellow; */
+    /* border-radius: 10px; */
+    background-image: url(./img/pacman-2.svg);
+    /* background-repeat: no-repeat; */
+    background-size: cover;
 }
+
+.up {
+    transform: rotate(-90deg);
+}
+
+.down {
+    transform: rotate(90deg);
+}
+
+.left {
+    transform: rotate(180deg);
+}
+
+.right {
+    transform: rotate(0deg);
+}
+
 
 .blinky {
     background-color: red;

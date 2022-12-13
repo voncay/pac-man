@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
           )
         pacmanCurrentIndex -= 1
+        squares[pacmanCurrentIndex].classList.add('left')
         if (squares[pacmanCurrentIndex -1] === squares[363]) {  // cas ou il sort du tunnel
           pacmanCurrentIndex = 391
         }
@@ -133,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
           ) 
         pacmanCurrentIndex -= width
+        squares[pacmanCurrentIndex].classList.add('up')
         break
       case 39:  // arrowright --> fleche de droite
         if(
@@ -141,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
         )
         pacmanCurrentIndex += 1
+        squares[pacmanCurrentIndex].classList.add('right')
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
         }
@@ -152,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
         )
         pacmanCurrentIndex += width
+        squares[pacmanCurrentIndex].classList.add('down')
         break
     }
 
@@ -258,10 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // si le temps est ecoulé avec la gameTimerId, alors appelé gameOver()
   }
 
+  //const timeoutId = setTimeout(gameOver(), 10000);
+
   function gameOver() {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))  // remove ghost
     document.removeEventListener('keyup', movePacman)  // remove pacman
-    setTimeout(function(){ alert("Game Over"); }, 500)  // affiche gameOver
+    alert("Gamme Over")  // affiche gameOver
   }
 
   //check for a game over
