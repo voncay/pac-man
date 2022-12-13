@@ -89,6 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   createBoard()
 
+  const setTimerGame = () => {
+    // Commencer le chrono avec setTimeOut()
+  }
+
 
   //create Characters
   //draw pacman onto the board
@@ -248,13 +252,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }, ghost.speed)
   }
 
+
+  function checkTimerGame() {
+    // const gameTimerId = setTimerGame()
+    // si le temps est ecoulé avec la gameTimerId, alors appelé gameOver()
+  }
+
+  function gameOver() {
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))  // remove ghost
+    document.removeEventListener('keyup', movePacman)  // remove pacman
+    setTimeout(function(){ alert("Game Over"); }, 500)  // affiche gameOver
+  }
+
   //check for a game over
   function checkForGameOver() {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
-      ghosts.forEach(ghost => clearInterval(ghost.timerId))
-      document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ alert("Game Over"); }, 500)
+      ghosts.forEach(ghost => clearInterval(ghost.timerId))  // remove ghost
+      document.removeEventListener('keyup', movePacman)  // remove pacman
+      setTimeout(function(){ alert("Game Over"); }, 500)  // affiche gameOver
     }
   }
 
